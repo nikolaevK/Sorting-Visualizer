@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import BarChart from "../components/BarChart";
 import Nav from "../components/Nav";
 
 const Home: NextPage = () => {
@@ -10,8 +11,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-screen f">
+      <main className="flex flex-col h-screen">
         <Nav />
+        <BarChart />
       </main>
     </div>
   );

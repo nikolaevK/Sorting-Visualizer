@@ -5,11 +5,26 @@ import {
   XMarkIcon,
   ChartBarIcon,
 } from "@heroicons/react/24/outline";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { settingContext } from "./utils/AlgoContext";
 
+interface Navigation {
+  name: string;
+  current: boolean;
+}
+
+interface NavigationList extends Array<Navigation> {}
+
+const navigation: NavigationList = [
+  { name: "MergeSort", current: false },
+  { name: "InsertionSort", current: false },
+  { name: "BubbleSort", current: false },
+  { name: "SelectionSort", current: false },
+];
+
 const Nav = () => {
-  const { settings, setSettings } = useContext(settingContext);
+  const { sort, settings, setSettings } = useContext(settingContext);
+  const [navState, setNavState] = useState(navigation);
 
   const onArrayChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     if (!setSettings) return;
@@ -22,12 +37,20 @@ const Nav = () => {
     setSettings((prev) => ({ ...prev, delay: +e.target.value }));
   };
 
-  const navigation = [
-    { name: "MergeSort", href: "#", current: false },
-    { name: "Team", href: "#", current: true },
-    { name: "Projects", href: "#", current: false },
-    { name: "Calendar", href: "#", current: false },
-  ];
+  const onAlgorithmChange = (name: string) => {
+    if (!setSettings) return;
+    setSettings((prev) => ({ ...prev, algoName: name }));
+
+    // Active Button/Algorithm
+    const newArray = navState.map((algorithm) => {
+      if (algorithm.name === name) {
+        return { ...algorithm, current: true };
+      } else {
+        return { ...algorithm, current: false };
+      }
+    });
+    setNavState(newArray);
+  };
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -56,10 +79,10 @@ const Nav = () => {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
+                    {navState?.map((item) => (
+                      <button
+                        onClick={() => onAlgorithmChange(item.name)}
                         key={item.name}
-                        href={item.href}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
@@ -69,7 +92,7 @@ const Nav = () => {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </button>
                     ))}
                     <div className="flex flex-col justify-center items-center text-gray-300">
                       <label htmlFor="items_amount">
@@ -102,7 +125,10 @@ const Nav = () => {
                 </div>
               </div>
               <div>
-                <button className="rounded-full bg-gray-800 p-1 text-purple-500 hover:text-purple-500 focus:outline-none  hover:ring-2 hover:ring-purple-500 ">
+                <button
+                  onClick={() => sort(settings.algoName)}
+                  className="rounded-full bg-gray-800 p-1 text-purple-500 hover:text-purple-500 focus:outline-none  hover:ring-2 hover:ring-purple-500 "
+                >
                   <PlayIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>
@@ -112,11 +138,11 @@ const Nav = () => {
           {/* Mobile */}
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
-              {navigation.map((item) => (
+              {navState?.map((item) => (
                 <Disclosure.Button
+                  onClick={() => onAlgorithmChange(item.name)}
                   key={item.name}
-                  as="a"
-                  href={item.href}
+                  as="button"
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"
