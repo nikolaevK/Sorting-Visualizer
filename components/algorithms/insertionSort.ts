@@ -9,7 +9,7 @@ export function insertionSort(arr: number[]) {
   for (let i = 1; i < arr.length; i++) {
     let tempVar = arr[i];
     for (var j = i - 1; j >= 0 && arr[j] > tempVar; j--) {
-      // pushing indexes of numbers
+      // pushing indexes of swapped numbers
       animationArray.push([j + 1, j]);
       arr[j + 1] = arr[j];
     }

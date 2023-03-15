@@ -14,7 +14,7 @@ interface Navigation {
 }
 
 interface NavigationList extends Array<Navigation> {}
-
+// used to render buttons
 const navigation: NavigationList = [
   { name: "MergeSort", current: false },
   { name: "InsertionSort", current: false },
@@ -24,24 +24,24 @@ const navigation: NavigationList = [
 
 const Nav = () => {
   const { sort, settings, setSettings } = useContext(settingContext);
-  const [navState, setNavState] = useState(navigation);
+  const [navState, setNavState] = useState(navigation); // mutates state to show active buttons
 
-  const onArrayChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  function onArrayChange(e: { target: HTMLInputElement }) {
     if (!setSettings) return;
-    // chosen length 0-100 * 5: Max array length 500, min 5
-    setSettings((prev) => ({ ...prev, arrayLength: +e.target.value * 5 }));
-  };
+    // chosen length 0-100 * 4: Max array length 400, min 4
+    setSettings((prev) => ({ ...prev, arrayLength: +e.target.value * 4 }));
+  }
 
-  const onDelayChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  function onDelayChange(e: { target: HTMLInputElement }) {
     if (!setSettings) return;
     setSettings((prev) => ({ ...prev, delay: +e.target.value }));
-  };
+  }
 
-  const onAlgorithmChange = (name: string) => {
+  function onAlgorithmChange(name: string) {
     if (!setSettings) return;
     setSettings((prev) => ({ ...prev, algoName: name }));
 
-    // Active Button/Algorithm
+    // Mutates navState, assigns true to current button
     const newArray = navState.map((algorithm) => {
       if (algorithm.name === name) {
         return { ...algorithm, current: true };
@@ -50,7 +50,7 @@ const Nav = () => {
       }
     });
     setNavState(newArray);
-  };
+  }
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -65,7 +65,6 @@ const Nav = () => {
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                   ) : (
@@ -79,7 +78,7 @@ const Nav = () => {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navState?.map((item) => (
+                    {navState.map((item) => (
                       <button
                         onClick={() => onAlgorithmChange(item.name)}
                         key={item.name}
