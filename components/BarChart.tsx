@@ -1,21 +1,29 @@
-import { useContext } from "react";
-import { itemsContext } from "./utils/AlgoContext";
+import { useContext, useEffect } from "react";
+import { itemsContext, settingContext } from "./utils/AlgoContext";
 
 const BarChart = () => {
   const { items } = useContext(itemsContext);
+  const { settings } = useContext(settingContext);
+
+  useEffect(() => {
+    items.map((item, index) => console.log(item, index));
+  }, [items]);
+
   return (
     <section className="h-full mt-4">
-      <div className="flex justify-center h-[80vh] w-[90vh] m-auto items-end gap-[1px]">
+      <div className="flex justify-center h-[80vh] w-[90vw] m-auto items-end gap-[1px]">
         {items.map((item, idx) => (
           <div
-            key={idx}
+            key={`${item}-${settings.arrayLength}-${idx}`}
             className="flex-1"
             id={`${idx}`}
             style={{
               backgroundColor: "rgb(168, 85, 247)",
-              height: `${item / 7}%`,
+              height: `${Math.floor(item / 7)}%`,
             }}
-          />
+          >
+            {item}
+          </div>
         ))}
       </div>
     </section>

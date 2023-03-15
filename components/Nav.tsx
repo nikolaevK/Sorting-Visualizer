@@ -116,7 +116,7 @@ const Nav = () => {
                         name="delay"
                         id="delay"
                         className=" accent-purple-500"
-                        min={3}
+                        min={1}
                         defaultValue={15}
                         onChange={onDelayChange}
                       />

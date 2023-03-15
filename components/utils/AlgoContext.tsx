@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { insertionSort } from "../algorithms/insertionSort";
+import { mergeSort } from "../algorithms/mergeSort";
 
 interface Props {
   children: React.ReactNode;
@@ -56,38 +57,62 @@ const AlgoContext: React.FC<Props> = ({ children }) => {
     switch (name) {
       case "InsertionSort":
         const [arr, animationArray] = insertionSort(items);
-        animateDivs(arr, animationArray);
+        animateDivs(arr as number[], animationArray as number[][]);
         break;
       case "MergeSort":
+        const animArr: number[][] = [[]];
+        const sorted = mergeSort(items, animArr);
+        // console.log(sorted);
+        // console.log(animArr);
+        animateMerge(sorted, animArr);
         break;
     }
   };
 
-  const animateDivs = (arr: number[], animationArray: number[][]) => {
+  function animateMerge(arr: number[], animationArray: number[][]) {
     animationArray.forEach(([first, second], idx) => {
-      const div1 = document.getElementById(`${first}`);
-      const div2 = document.getElementById(`${second}`);
+      const div = document.getElementById(`${second}`);
 
-      if (!div1 || !div2) return;
+      if (!div) return;
 
       setTimeout(() => {
-        div1.style.backgroundColor = "#f10f6211fo";
-        div2.style.backgroundColor = "#f10f6211fo";
-        const divHeight = div1.style.height;
-        div1.style.height = div2.style.height;
+        div.style.backgroundColor = "#000000ed";
+        div.style.height = `${Math.floor(first / 7)}%`;
+        setTimeout(() => {
+          div.style.backgroundColor = "rgb(168, 85, 247)";
+          if (idx === animationArray.length - 1) {
+            setItems(arr);
+          }
+        }, settings.delay * 3);
+      }, settings.delay * idx * 3);
+    });
+  }
+
+  function animateDivs(arr: number[], animationArray: number[][]) {
+    animationArray.forEach(([first, second], idx) => {
+      const div = document.getElementById(`${first}`);
+      const div2 = document.getElementById(`${second}`);
+
+      if (!div || !div2) return;
+
+      setTimeout(() => {
+        div.style.backgroundColor = "#000000ed";
+        div2.style.backgroundColor = "#000000ed";
+        const divHeight = div.style.height;
+        div.style.height = div2.style.height;
         div2.style.height = divHeight;
 
         setTimeout(() => {
-          div1.style.backgroundColor = "rgb(168, 85, 247)";
+          div.style.backgroundColor = "rgb(168, 85, 247)";
           div2.style.backgroundColor = "rgb(168, 85, 247)";
 
           if (idx === animationArray.length - 1) {
             setItems(arr);
           }
-        }, settings.delay * 5);
-      }, settings.delay * idx * 5);
+        }, settings.delay * 3);
+      }, settings.delay * idx * 3);
     });
-  };
+  }
 
   return (
     <itemsContext.Provider value={{ items, setItems }}>
