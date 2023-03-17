@@ -4,7 +4,7 @@
 
 // If data comes continuously then Insertion sort algorithm does well because you don't have to resort data
 export function insertionSort(arr: number[]) {
-  const animationArray: number[][] = [[]];
+  const animationArray: number[][] = [];
 
   for (let i = 1; i < arr.length; i++) {
     let tempVar = arr[i];
@@ -15,5 +15,5 @@ export function insertionSort(arr: number[]) {
     }
     arr[j + 1] = tempVar;
   }
-  return [arr, animationArray];
+  return { arr, animationArray };
 }

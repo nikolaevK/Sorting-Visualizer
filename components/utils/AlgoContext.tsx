@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
+import { bubbleSort } from "../algorithms/bubbleSort";
 import { insertionSort } from "../algorithms/insertionSort";
 import { mergeSort } from "../algorithms/mergeSort";
 
@@ -58,10 +59,10 @@ export function AlgoContext({ children }: AlgoContextProvider) {
   function sort(name: string) {
     switch (name) {
       case "InsertionSort":
-        const [arr, animationArray] = insertionSort(items);
+        const { arr, animationArray } = insertionSort(items);
         // arr is optional and sorted array for state change if needed
         // not needed for animation
-        animateInsertionSort(arr as number[], animationArray as number[][]);
+        animationSwap(arr, animationArray);
         break;
       case "MergeSort":
         const animArr: number[][] = [];
@@ -69,6 +70,10 @@ export function AlgoContext({ children }: AlgoContextProvider) {
         // sorted is needed for new sorted items array if needed
         // not needed for animation
         animateMerge(sorted, animArr);
+        break;
+      case "BubbleSort":
+        const { array, animationBubbleArray } = bubbleSort(items);
+        animationSwap(array, animationBubbleArray);
         break;
     }
   }
@@ -93,7 +98,7 @@ export function AlgoContext({ children }: AlgoContextProvider) {
     });
   }
 
-  function animateInsertionSort(arr: number[], animationArray: number[][]) {
+  function animationSwap(arr: number[], animationArray: number[][]) {
     animationArray.forEach(([first, second], idx) => {
       const div = document.getElementById(`${first}`);
       const div2 = document.getElementById(`${second}`);
