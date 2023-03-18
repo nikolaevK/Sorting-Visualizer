@@ -14,9 +14,11 @@ interface Navigation {
 }
 
 interface NavigationList extends Array<Navigation> {}
+
 // used to render buttons
 const navigation: NavigationList = [
   { name: "MergeSort", current: false },
+  { name: "QuickSort", current: false },
   { name: "InsertionSort", current: false },
   { name: "BubbleSort", current: false },
   { name: "SelectionSort", current: false },
@@ -28,8 +30,8 @@ const Nav = () => {
 
   function onArrayChange(e: { target: HTMLInputElement }) {
     if (!setSettings) return;
-    // chosen length 0-100 * 4: Max array length 400, min 4
-    setSettings((prev) => ({ ...prev, arrayLength: +e.target.value * 4 }));
+    // chosen length 0-100 * 4: Max array length 400, min 5
+    setSettings((prev) => ({ ...prev, arrayLength: +e.target.value * 5 }));
   }
 
   function onDelayChange(e: { target: HTMLInputElement }) {
@@ -37,6 +39,7 @@ const Nav = () => {
     setSettings((prev) => ({ ...prev, delay: +e.target.value }));
   }
 
+  // changes the algorithm which needs to be ran
   function onAlgorithmChange(name: string) {
     if (!setSettings) return;
     setSettings((prev) => ({ ...prev, algoName: name }));

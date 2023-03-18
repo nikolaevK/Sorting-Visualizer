@@ -2,6 +2,8 @@ import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { bubbleSort } from "../algorithms/bubbleSort";
 import { insertionSort } from "../algorithms/insertionSort";
 import { mergeSort } from "../algorithms/mergeSort";
+import { quickSort } from "../algorithms/quickSort";
+import { selectionSort } from "../algorithms/selectionSort";
 
 interface AlgoContextProvider {
   children: ReactNode;
@@ -59,10 +61,10 @@ export function AlgoContext({ children }: AlgoContextProvider) {
   function sort(name: string) {
     switch (name) {
       case "InsertionSort":
-        const { arr, animationArray } = insertionSort(items);
+        const { insertionArr, animationInsertionArray } = insertionSort(items);
         // arr is optional and sorted array for state change if needed
         // not needed for animation
-        animationSwap(arr, animationArray);
+        animationSwap(insertionArr, animationInsertionArray);
         break;
       case "MergeSort":
         const animArr: number[][] = [];
@@ -72,8 +74,18 @@ export function AlgoContext({ children }: AlgoContextProvider) {
         animateMerge(sorted, animArr);
         break;
       case "BubbleSort":
-        const { array, animationBubbleArray } = bubbleSort(items);
-        animationSwap(array, animationBubbleArray);
+        const { bubbleArr, animationBubbleArray } = bubbleSort(items);
+        animationSwap(bubbleArr, animationBubbleArray);
+        break;
+      case "SelectionSort":
+        const { selectionArr, animationSelectionArray } = selectionSort(items);
+        animationSwap(selectionArr, animationSelectionArray);
+        break;
+      case "QuickSort":
+        const quickSortAnimationArr: number[][] = [];
+        const quickSortArray = quickSort(items, quickSortAnimationArr);
+        animationSwap(quickSortArray, quickSortAnimationArr);
+
         break;
     }
   }
