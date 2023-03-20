@@ -4,8 +4,6 @@ export function quickSort(
   left = 0,
   right = quickSortArray.length
 ) {
-  console.log(quickSortArray);
-  console.log(quickSortAnimationArr);
   if (left < right) {
     let index = pivot2(quickSortArray, quickSortAnimationArr, left, right);
     // leftSide

@@ -1,9 +1,11 @@
-import type { NextPage } from "next";
 import Head from "next/head";
-import BarChart from "../components/BarChart";
-import Nav from "../components/Nav";
+import React from "react";
+import GraphChart from "../components/GraphChart";
+import GraphsNav from "../components/graphsNav";
 
-const Home: NextPage = () => {
+type Props = {};
+
+const graph = (props: Props) => {
   return (
     <div>
       <Head>
@@ -12,11 +14,11 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex flex-col h-screen bg-gray-200">
-        <Nav />
-        <BarChart />
+        <GraphsNav />
+        <GraphChart />
       </main>
     </div>
   );
 };
 
-export default Home;
+export default graph;

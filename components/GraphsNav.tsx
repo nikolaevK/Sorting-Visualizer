@@ -18,15 +18,11 @@ interface NavigationList extends Array<Navigation> {}
 
 // used to render buttons
 const navigation: NavigationList = [
-  { name: "MergeSort", current: false },
-  { name: "QuickSort", current: false },
-  { name: "RadixSort", current: false },
-  { name: "InsertionSort", current: false },
-  { name: "BubbleSort", current: false },
-  { name: "SelectionSort", current: false },
+  { name: "BFS", current: false },
+  { name: "DFS", current: false },
 ];
 
-const Nav = () => {
+const GraphsNav = () => {
   const { sort, settings, setSettings } = useContext(settingContext);
   const [navState, setNavState] = useState(navigation); // mutates state to show active buttons
 
@@ -60,7 +56,6 @@ const Nav = () => {
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
   }
-
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -98,9 +93,9 @@ const Nav = () => {
                         {item.name}
                       </button>
                     ))}
-                    <Link href={"/graph"}>
+                    <Link href={"/"}>
                       <button className="rounded-md px-3 py-2 text-sm font-medium text-purple-500 hover:bg-gray-700">
-                        Graphs
+                        Sorts
                       </button>
                     </Link>
 
@@ -164,9 +159,9 @@ const Nav = () => {
                   {item.name}
                 </Disclosure.Button>
               ))}
-              <Link href={"/graph"}>
+              <Link href={"/"}>
                 <button className="rounded-md px-3 py-2 text-sm font-medium text-purple-500 hover:bg-gray-700">
-                  Graphs
+                  Sorts
                 </button>
               </Link>
               <div className="flex flex-col justify-center items-center text-gray-300">
@@ -204,4 +199,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default GraphsNav;

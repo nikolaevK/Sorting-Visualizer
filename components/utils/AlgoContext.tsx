@@ -3,6 +3,7 @@ import { bubbleSort } from "../algorithms/bubbleSort";
 import { insertionSort } from "../algorithms/insertionSort";
 import { mergeSort } from "../algorithms/mergeSort";
 import { quickSort } from "../algorithms/quickSort";
+import { radixSort } from "../algorithms/radixSort";
 import { selectionSort } from "../algorithms/selectionSort";
 
 interface AlgoContextProvider {
@@ -56,7 +57,7 @@ export function AlgoContext({ children }: AlgoContextProvider) {
       randomNumArray.push(Math.floor(Math.random() * 513));
     }
     setItems(randomNumArray);
-  }, [settings.arrayLength]);
+  }, [settings.arrayLength, settings.algoName]);
 
   function sort(name: string) {
     switch (name) {
@@ -71,7 +72,7 @@ export function AlgoContext({ children }: AlgoContextProvider) {
         const sorted = mergeSort(items, animArr);
         // sorted is needed for new sorted items array if needed
         // not needed for animation
-        animateMerge(sorted, animArr);
+        animateIndexChange(sorted, animArr);
         break;
       case "BubbleSort":
         const { bubbleArr, animationBubbleArray } = bubbleSort(items);
@@ -85,12 +86,15 @@ export function AlgoContext({ children }: AlgoContextProvider) {
         const quickSortAnimationArr: number[][] = [];
         const quickSortArray = quickSort(items, quickSortAnimationArr);
         animationSwap(quickSortArray, quickSortAnimationArr);
-
+        break;
+      case "RadixSort":
+        const { radixSortArray, animationRadixArray } = radixSort(items);
+        animateIndexChange(radixSortArray, animationRadixArray);
         break;
     }
   }
 
-  function animateMerge(arr: number[], animationArray: number[][]) {
+  function animateIndexChange(arr: number[], animationArray: number[][]) {
     animationArray.forEach(([value, index], animIndex) => {
       const div = document.getElementById(`${index}`);
 
@@ -101,9 +105,9 @@ export function AlgoContext({ children }: AlgoContextProvider) {
         div.style.height = `${Math.floor(value / 7)}%`;
         setTimeout(() => {
           div.style.backgroundColor = "rgb(168, 85, 247)";
-          //   if (idx === animationArray.length - 1) {
-          //     setItems(arr);
-          //   }
+          // if (animIndex === animationArray.length - 1) {
+          //   setItems(arr);
+          // }
           // optional for a state change
         }, settings.delay * 3);
       }, settings.delay * animIndex * 3);
