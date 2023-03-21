@@ -17,7 +17,7 @@ const BarChart = () => {
           {items.map((item, idx) => (
             <div
               key={`${item}-${settings.arrayLength}-${idx}`}
-              className="flex-1"
+              className="flex-1 rounded-md"
               id={`${idx}`}
               style={{
                 backgroundColor: "rgb(168, 85, 247)",
