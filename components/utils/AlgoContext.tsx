@@ -27,10 +27,12 @@ interface SettingContext {
   settings: Settings;
   setSettings?: React.Dispatch<React.SetStateAction<Settings>>;
   sort: (name: string) => void;
+  traverse: (array: number[], algorithmName: string) => void;
 }
 
 interface ItemsContext {
   items: number[];
+  nodes: number[];
   setItems?: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
@@ -38,26 +40,40 @@ interface ItemsContext {
 export const settingContext = createContext<SettingContext>({
   settings: initialValue,
   sort: (name: string) => {},
+  traverse: (array: number[], algorithmName: string) => {},
 });
 
 // Creating a random array of numbers to sort
 export const itemsContext = createContext<ItemsContext>({
   items: [],
+  nodes: [],
 });
 
 export function AlgoContext({ children }: AlgoContextProvider) {
   const [settings, setSettings] = useState(initialValue);
   const [items, setItems] = useState<number[]>([]);
+  const [nodes, setNodes] = useState<number[]>([]);
 
   // setting items array depending on the input from the length slider
   // updates every time slider is moved
   useEffect(() => {
+    // Items for sorting algorithms
     const randomNumArray = [];
     for (let i = 0; i < settings.arrayLength; i++) {
       randomNumArray.push(Math.floor(Math.random() * 513));
     }
     setItems(randomNumArray);
-  }, [settings.arrayLength, settings.algoName]);
+
+    // Nodes for graph traversal
+    const nodesArray = [];
+    for (let i = 0; i < 16; i++) {
+      nodesArray.push(i);
+
+      const div = document.getElementById(`${i}`);
+      if (div) div.style.backgroundColor = "transparent";
+    }
+    setNodes(nodesArray);
+  }, [settings.arrayLength, settings.delay, settings.algoName]);
 
   function sort(name: string) {
     switch (name) {
@@ -127,6 +143,7 @@ export function AlgoContext({ children }: AlgoContextProvider) {
 
         // swap hights since elements were swapped in InsertionSort
         const divHeight = div.style.height;
+
         div.style.height = div2.style.height;
         div2.style.height = divHeight;
 
@@ -143,9 +160,42 @@ export function AlgoContext({ children }: AlgoContextProvider) {
     });
   }
 
+  function traverse(array: number[], algorithmName: string) {
+    switch (algorithmName) {
+      case "BFS":
+        animateBFS_DFS(array);
+        break;
+      case "DFS":
+        animateBFS_DFS(array);
+        break;
+    }
+  }
+
+  function animateBFS_DFS(arrayBFS_DFS: number[]) {
+    arrayBFS_DFS.forEach((value, idx) => {
+      const div = document.getElementById(`${value}`);
+
+      if (!div) return;
+
+      setTimeout(() => {
+        div.style.backgroundColor = "rgb(168, 85, 247)";
+
+        setTimeout(() => {
+          if (div.id === "0") {
+            div.style.backgroundColor = "rgb(168, 85, 247)";
+          } else {
+            div.style.backgroundColor = "rgb(216 180 254)";
+          }
+        }, settings.delay * 10);
+      }, settings.delay * idx * 10);
+    });
+  }
+
   return (
-    <itemsContext.Provider value={{ items, setItems }}>
-      <settingContext.Provider value={{ sort, settings, setSettings }}>
+    <itemsContext.Provider value={{ items, nodes, setItems }}>
+      <settingContext.Provider
+        value={{ sort, traverse, settings, setSettings }}
+      >
         {children}
       </settingContext.Provider>
     </itemsContext.Provider>

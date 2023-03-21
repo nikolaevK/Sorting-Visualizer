@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import GraphChart from "../components/GraphChart";
-import GraphsNav from "../components/graphsNav";
+import GraphsNav from "../components/GraphsNav";
 
 type Props = {};
 

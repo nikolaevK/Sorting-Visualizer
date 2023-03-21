@@ -1,29 +1,45 @@
-type Props = {};
+import { useContext } from "react";
+import { itemsContext, settingContext } from "./utils/AlgoContext";
 
-const GraphChart = (props: Props) => {
-  const array = [];
-  for (let i = 0; i < 168; i++) {
-    array.push([]);
-  }
+const GraphChart = () => {
+  const { settings } = useContext(settingContext);
+  const { nodes } = useContext(itemsContext);
 
-  for (let j = 0; j < 10; j++) {
-    array[Math.round(Math.random() * 128)].push(j);
-  }
   return (
-    <section className="h-full mt-2 md:mt-4 m-auto">
-      <div className="grid grid-cols-12 gap-4">
-        {array.map((div) => {
+    <section className="h-full mt-20 m-auto text-center">
+      <label className="text-purple-500 text-4xl font-semibold pb-6">
+        {settings.algoName}
+      </label>
+      <div className="relative grid grid-cols-4 gap-9 mt-8">
+        {nodes.map((div, idx) => {
           return (
             <div
-              style={{
-                border: typeof div[0] === "number" ? "1px solid black" : "",
-              }}
-              className="h-12 w-12 text-center rounded-full"
+              key={idx}
+              id={`${idx}`}
+              style={{}}
+              className="h-12 w-12 text-center pt-2 rounded-full border-4 border-purple-500"
             >
-              {div[0]}
+              {div}
             </div>
           );
         })}
+        {/* Absolutely positioned Edges between Nodes */}
+        <div className="absolute border-b-4 border-black w-9 top-[24px] left-[48px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[108px] left-[48px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[276px] left-[48px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[276px] left-[132px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[276px] left-[216px]" />
+        <div className="absolute border-r-4 border-black h-9 top-[48px] left-[22px]" />
+        <div className="absolute border-r-4 border-black h-9 top-[48px] left-[274px]" />
+        <div className="absolute border-r-4 border-black h-9 top-[132px] left-[22px]" />
+        <div className="absolute border-r-4 border-black h-9 top-[216px] left-[190px]" />
+        <div className="absolute border-r-4 border-black h-[73px] top-[202px] left-[236px] transform rotate-45" />
+        <div className="absolute border-r-4 border-black h-9 top-[132px] left-[106px]" />
+        <div className="absolute border-r-4 border-black h-9 top-[216px] left-[22px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[24px] left-[132px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[108px] left-[132px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[24px] left-[216px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[108px] left-[216px]" />
       </div>
     </section>
   );

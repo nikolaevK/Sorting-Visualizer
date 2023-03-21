@@ -13,7 +13,7 @@ const BarChart = () => {
             {settings.algoName}
           </label>
         </div>
-        <div className="flex justify-center h-[80vh] m-auto px-2 py-2 items-end gap-[1px]">
+        <div className="flex justify-center h-[80vh]  px-2 py-2 items-end gap-[1px]">
           {items.map((item, idx) => (
             <div
               key={`${item}-${settings.arrayLength}-${idx}`}

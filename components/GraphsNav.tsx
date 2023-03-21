@@ -6,7 +6,8 @@ import {
   ChartBarIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Graph } from "./graphs/graph";
 import { settingContext } from "./utils/AlgoContext";
 
 interface Navigation {
@@ -23,14 +24,33 @@ const navigation: NavigationList = [
 ];
 
 const GraphsNav = () => {
-  const { sort, settings, setSettings } = useContext(settingContext);
+  const { traverse, settings, setSettings } = useContext(settingContext);
   const [navState, setNavState] = useState(navigation); // mutates state to show active buttons
 
-  function onArrayChange(e: { target: HTMLInputElement }) {
-    if (!setSettings) return;
-    // chosen length 0-100 * 5: Max array length 400, min 5
-    setSettings((prev) => ({ ...prev, arrayLength: +e.target.value * 5 }));
+  // Adding Vertexes, used as id for divs and animation
+  const list = new Graph();
+
+  for (let i = 0; i < 16; i++) {
+    list.addVertex(i);
   }
+
+  // Adding Edges to the graph
+  list.addEdge(0, 1);
+  list.addEdge(0, 4);
+  list.addEdge(1, 2);
+  list.addEdge(2, 3);
+  list.addEdge(3, 7);
+  list.addEdge(4, 5);
+  list.addEdge(4, 8);
+  list.addEdge(8, 12);
+  list.addEdge(12, 13);
+  list.addEdge(13, 14);
+  list.addEdge(14, 10);
+  list.addEdge(14, 11);
+  list.addEdge(14, 15);
+  list.addEdge(5, 6);
+  list.addEdge(5, 9);
+  list.addEdge(6, 7);
 
   function onDelayChange(e: { target: HTMLInputElement }) {
     if (!setSettings) return;
@@ -61,7 +81,7 @@ const GraphsNav = () => {
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-[5rem] items-center justify-between">
+            <div className="relative flex h-[5rem] items-center justify-between mx-3">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -100,21 +120,6 @@ const GraphsNav = () => {
                     </Link>
 
                     <div className="flex flex-col justify-center items-center text-gray-300">
-                      <label htmlFor="items_amount">
-                        Array Size: {settings.arrayLength}
-                      </label>
-                      <input
-                        type="range"
-                        name="items_amount"
-                        id="items_amount"
-                        className=" accent-purple-500"
-                        defaultValue={25}
-                        min={1}
-                        onChange={onArrayChange}
-                      />
-                    </div>
-
-                    <div className="flex flex-col justify-center items-center text-gray-300">
                       <label htmlFor="delay">Delay: {settings.delay}</label>
                       <input
                         type="range"
@@ -131,7 +136,12 @@ const GraphsNav = () => {
               </div>
               <div>
                 <button
-                  onClick={() => sort(settings.algoName)}
+                  onClick={() => {
+                    if (settings.algoName === "BFS")
+                      traverse(list.BFS(0), settings.algoName);
+                    if (settings.algoName === "DFS")
+                      traverse(list.DFSiterative(0), settings.algoName);
+                  }}
                   className="rounded-full bg-gray-800 p-1 text-purple-500 hover:text-purple-500 focus:outline-none  hover:ring-2 hover:ring-purple-500 "
                 >
                   <PlayIcon className="h-6 w-6" aria-hidden="true" />
@@ -142,7 +152,7 @@ const GraphsNav = () => {
 
           {/* Mobile */}
           <Disclosure.Panel className="sm:hidden">
-            <div className="absolute bg-gray-800 space-y-1 px-2 pt-2 pb-3">
+            <div className="absolute z-10 bg-gray-800 space-y-1 px-2 pt-2 pb-3">
               {navState?.map((item) => (
                 <Disclosure.Button
                   onClick={() => onAlgorithmChange(item.name)}
@@ -164,20 +174,6 @@ const GraphsNav = () => {
                   Sorts
                 </button>
               </Link>
-              <div className="flex flex-col justify-center items-center text-gray-300">
-                <label htmlFor="items_amount">
-                  Array Size: {settings.arrayLength}
-                </label>
-                <input
-                  type="range"
-                  name="items_amount"
-                  id="items_amount"
-                  className=" accent-purple-500"
-                  defaultValue={25}
-                  min={1}
-                  onChange={onArrayChange}
-                />
-              </div>
 
               <div className="flex flex-col justify-center items-center text-gray-300">
                 <label htmlFor="delay">Delay: {settings.delay}</label>
