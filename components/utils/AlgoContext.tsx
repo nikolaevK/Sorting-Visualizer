@@ -27,7 +27,11 @@ interface SettingContext {
   settings: Settings;
   setSettings?: React.Dispatch<React.SetStateAction<Settings>>;
   sort: (name: string) => void;
-  traverse: (array: number[], algorithmName: string) => void;
+  traverse: (
+    array: number[],
+    algorithmName: string,
+    animationGraphArray?: number[]
+  ) => void;
 }
 
 interface ItemsContext {
@@ -40,7 +44,11 @@ interface ItemsContext {
 export const settingContext = createContext<SettingContext>({
   settings: initialValue,
   sort: (name: string) => {},
-  traverse: (array: number[], algorithmName: string) => {},
+  traverse: (
+    array: number[],
+    algorithmName: string,
+    animationGraphArray?: number[]
+  ) => {},
 });
 
 // Creating a random array of numbers to sort
@@ -160,13 +168,20 @@ export function AlgoContext({ children }: AlgoContextProvider) {
     });
   }
 
-  function traverse(array: number[], algorithmName: string) {
+  function traverse(
+    array: number[],
+    algorithmName: string,
+    animationGraphArray?: number[]
+  ) {
     switch (algorithmName) {
       case "BFS":
         animateBFS_DFS(array);
         break;
       case "DFS":
         animateBFS_DFS(array);
+        break;
+      case "Dijkstra":
+        animateDijkstra(array, animationGraphArray!);
         break;
     }
   }
@@ -185,6 +200,36 @@ export function AlgoContext({ children }: AlgoContextProvider) {
             div.style.backgroundColor = "rgb(168, 85, 247)";
           } else {
             div.style.backgroundColor = "rgb(216 180 254)";
+          }
+        }, settings.delay * 10);
+      }, settings.delay * idx * 10);
+    });
+  }
+
+  function animateDijkstra(finalPath: number[], animationGraphArray: number[]) {
+    const startNode = document.getElementById("0");
+
+    animationGraphArray.forEach((value, idx) => {
+      const div = document.getElementById(`${value}`);
+      if (!div) return;
+
+      setTimeout(() => {
+        // Display first node in red
+        startNode!.style.backgroundColor = "rgb(252 165 165)";
+        div.style.backgroundColor = "rgb(168, 85, 247)";
+
+        setTimeout(() => {
+          div.style.backgroundColor = "rgb(216 180 254)";
+          // Display Final Path with green color
+          if (idx === animationGraphArray.length - 1) {
+            finalPath.forEach((value, index) => {
+              const div = document.getElementById(`${value}`);
+              if (!div) return;
+
+              setTimeout(() => {
+                div.style.backgroundColor = "rgb(134 239 172)";
+              }, settings.delay * index * 10);
+            });
           }
         }, settings.delay * 10);
       }, settings.delay * idx * 10);

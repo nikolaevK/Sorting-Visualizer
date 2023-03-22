@@ -8,6 +8,7 @@ import {
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { Graph } from "./graphs/graph";
+import { WeightedGraph } from "./graphs/weightedGraph";
 import { settingContext } from "./utils/AlgoContext";
 
 interface Navigation {
@@ -21,6 +22,7 @@ interface NavigationList extends Array<Navigation> {}
 const navigation: NavigationList = [
   { name: "BFS", current: false },
   { name: "DFS", current: false },
+  { name: "Dijkstra", current: false },
 ];
 
 const GraphsNav = () => {
@@ -29,9 +31,11 @@ const GraphsNav = () => {
 
   // Adding Vertexes, used as id for divs and animation
   const list = new Graph();
+  const weightedGraph = new WeightedGraph();
 
   for (let i = 0; i < 16; i++) {
     list.addVertex(i);
+    weightedGraph.addVertex(i);
   }
 
   // Adding Edges to the graph
@@ -51,6 +55,30 @@ const GraphsNav = () => {
   list.addEdge(5, 6);
   list.addEdge(5, 9);
   list.addEdge(6, 7);
+  list.addEdge(7, 11);
+  list.addEdge(9, 10);
+  list.addEdge(10, 11);
+
+  // Adding Edges and weights to the weightedGraph
+  weightedGraph.addEdge(0, 1, 2);
+  weightedGraph.addEdge(0, 4, 1);
+  weightedGraph.addEdge(1, 2, 2);
+  weightedGraph.addEdge(2, 3, 2);
+  weightedGraph.addEdge(3, 7, 1);
+  weightedGraph.addEdge(4, 5, 5);
+  weightedGraph.addEdge(4, 8, 3);
+  weightedGraph.addEdge(8, 12, 5);
+  weightedGraph.addEdge(12, 13, 1);
+  weightedGraph.addEdge(13, 14, 1);
+  weightedGraph.addEdge(14, 10, 2);
+  weightedGraph.addEdge(14, 11, 2);
+  weightedGraph.addEdge(14, 15, 5);
+  weightedGraph.addEdge(5, 6, 4);
+  weightedGraph.addEdge(5, 9, 3);
+  weightedGraph.addEdge(6, 7, 7);
+  weightedGraph.addEdge(7, 11, 2);
+  weightedGraph.addEdge(9, 10, 6);
+  weightedGraph.addEdge(10, 11, 5);
 
   function onDelayChange(e: { target: HTMLInputElement }) {
     if (!setSettings) return;
@@ -80,7 +108,7 @@ const GraphsNav = () => {
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 ">
             <div className="relative flex h-[5rem] items-center justify-between mx-3">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -141,6 +169,16 @@ const GraphsNav = () => {
                       traverse(list.BFS(0), settings.algoName);
                     if (settings.algoName === "DFS")
                       traverse(list.DFSiterative(0), settings.algoName);
+                    if (settings.algoName === "Dijkstra") {
+                      const { finalPath, animationGraphArray } =
+                        weightedGraph.dijkstra(0, 10)!;
+
+                      traverse(
+                        finalPath,
+                        settings.algoName,
+                        animationGraphArray
+                      );
+                    }
                   }}
                   className="rounded-full bg-gray-800 p-1 text-purple-500 hover:text-purple-500 focus:outline-none  hover:ring-2 hover:ring-purple-500 "
                 >

@@ -16,7 +16,6 @@ const GraphChart = () => {
             <div
               key={idx}
               id={`${idx}`}
-              style={{}}
               className="h-12 w-12 text-center pt-2 rounded-full border-4 border-purple-500"
             >
               {div}
@@ -40,6 +39,9 @@ const GraphChart = () => {
         <div className="absolute border-b-4 border-black w-9 top-[108px] left-[132px]" />
         <div className="absolute border-b-4 border-black w-9 top-[24px] left-[216px]" />
         <div className="absolute border-b-4 border-black w-9 top-[108px] left-[216px]" />
+        <div className="absolute border-r-4 border-black h-9 top-[132px] left-[274px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[190px] left-[132px]" />
+        <div className="absolute border-b-4 border-black w-9 top-[190px] left-[216px]" />
       </div>
     </section>
   );
