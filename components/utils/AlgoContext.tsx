@@ -15,12 +15,16 @@ const initialValue: Settings = {
   algoName: "MergeSort",
   arrayLength: 25,
   delay: 15,
+  nodeStart: 0,
+  nodeEnd: 15,
 };
 
 interface Settings {
   algoName: string;
   arrayLength: number;
   delay: number;
+  nodeStart: number;
+  nodeEnd: number;
 }
 
 interface SettingContext {
@@ -81,7 +85,13 @@ export function AlgoContext({ children }: AlgoContextProvider) {
       if (div) div.style.backgroundColor = "transparent";
     }
     setNodes(nodesArray);
-  }, [settings.arrayLength, settings.delay, settings.algoName]);
+  }, [
+    settings.arrayLength,
+    settings.delay,
+    settings.algoName,
+    settings.nodeStart,
+    settings.nodeEnd,
+  ]);
 
   function sort(name: string) {
     switch (name) {
@@ -207,14 +217,17 @@ export function AlgoContext({ children }: AlgoContextProvider) {
   }
 
   function animateDijkstra(finalPath: number[], animationGraphArray: number[]) {
-    const startNode = document.getElementById("0");
-
     animationGraphArray.forEach((value, idx) => {
       const div = document.getElementById(`${value}`);
       if (!div) return;
 
       setTimeout(() => {
         // Display first node in red
+
+        const startNode: HTMLElement | null = document.getElementById(
+          `${finalPath[0]}`
+        );
+
         startNode!.style.backgroundColor = "rgb(252 165 165)";
         div.style.backgroundColor = "rgb(168, 85, 247)";
 

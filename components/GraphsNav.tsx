@@ -171,7 +171,10 @@ const GraphsNav = () => {
                       traverse(list.DFSiterative(0), settings.algoName);
                     if (settings.algoName === "Dijkstra") {
                       const { finalPath, animationGraphArray } =
-                        weightedGraph.dijkstra(0, 15)!;
+                        weightedGraph.dijkstra(
+                          settings.nodeStart,
+                          settings.nodeEnd
+                        )!;
 
                       traverse(
                         finalPath,
