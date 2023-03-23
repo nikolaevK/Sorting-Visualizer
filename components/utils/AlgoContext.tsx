@@ -227,7 +227,12 @@ export function AlgoContext({ children }: AlgoContextProvider) {
               if (!div) return;
 
               setTimeout(() => {
+                // Display first node in red
+                startNode!.style.backgroundColor = "rgb(252 165 165)";
                 div.style.backgroundColor = "rgb(134 239 172)";
+                // checks for the end node to mark it blue
+                if (index === finalPath.length - 1)
+                  div.style.backgroundColor = "#93c5fd";
               }, settings.delay * index * 10);
             });
           }

@@ -65,7 +65,7 @@ const GraphsNav = () => {
   weightedGraph.addEdge(1, 2, 2);
   weightedGraph.addEdge(2, 3, 2);
   weightedGraph.addEdge(3, 7, 1);
-  weightedGraph.addEdge(4, 5, 5);
+  weightedGraph.addEdge(4, 5, 1);
   weightedGraph.addEdge(4, 8, 3);
   weightedGraph.addEdge(8, 12, 5);
   weightedGraph.addEdge(12, 13, 1);
@@ -74,10 +74,10 @@ const GraphsNav = () => {
   weightedGraph.addEdge(14, 11, 2);
   weightedGraph.addEdge(14, 15, 5);
   weightedGraph.addEdge(5, 6, 4);
-  weightedGraph.addEdge(5, 9, 3);
+  weightedGraph.addEdge(5, 9, 1);
   weightedGraph.addEdge(6, 7, 7);
-  weightedGraph.addEdge(7, 11, 2);
-  weightedGraph.addEdge(9, 10, 6);
+  weightedGraph.addEdge(7, 11, 3);
+  weightedGraph.addEdge(9, 10, 1);
   weightedGraph.addEdge(10, 11, 5);
 
   function onDelayChange(e: { target: HTMLInputElement }) {
@@ -171,7 +171,7 @@ const GraphsNav = () => {
                       traverse(list.DFSiterative(0), settings.algoName);
                     if (settings.algoName === "Dijkstra") {
                       const { finalPath, animationGraphArray } =
-                        weightedGraph.dijkstra(0, 10)!;
+                        weightedGraph.dijkstra(0, 15)!;
 
                       traverse(
                         finalPath,
