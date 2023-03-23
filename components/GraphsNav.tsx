@@ -6,7 +6,7 @@ import {
   ChartBarIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Graph } from "./graphs/graph";
 import { WeightedGraph } from "./graphs/weightedGraph";
 import { settingContext } from "./utils/AlgoContext";
