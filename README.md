@@ -1,12 +1,27 @@
-# Next.js + Tailwind CSS Example
+# Algorithm Visualizer
+> A mobile ready web application which allows user to visualize the work of basic sorting algorithms, as well as baic graph traversal algorithms.   
+> Live demo [_here_](https://effervescent-concha-cbb482.netlify.app/).
 
+
+![Example screenshot](./img/screenshot.png)
+
+## General Information
+- Visualize Merge Sort, Quick Sort, and Bubble/Insertion/Selection Sort algorithms.
+- Visualize Breadth First Search, Depth First Search, and Dijkstra's traverse algorithms.  
+
+## Technologies Used
+<div>
+  <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" title="React" alt="React" width="40" height="40"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/nextjs/nextjs-original-wordmark.svg" title="NextJs" alt="NextJs" width="40" height="40"/>&nbsp;
+    <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="TypeScript" alt="TypeScript" width="40" height="40"/>&nbsp;
+    <img src="https://github.com/devicons/devicon/blob/master/icons/tailwindcss/tailwindcss-plain.svg"  title="TailwindCSS" alt="TailwindCSS" width="40" height="40"/>&nbsp;
+</div>
+
+
+
+
+## Setup
 This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.2)](https://tailwindcss.com/blog/tailwindcss-v3-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
 
 ## How to use
 
@@ -24,4 +39,3 @@ yarn create next-app --example with-tailwindcss with-tailwindcss-app
 pnpm create next-app --example with-tailwindcss with-tailwindcss-app
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
