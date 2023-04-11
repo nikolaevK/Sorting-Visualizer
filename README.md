@@ -3,7 +3,7 @@
 > Live demo [_here_](https://effervescent-concha-cbb482.netlify.app/).
 
 
-![Example screenshot](./img/screenshot.png)
+![Example screenshot](./algo_visual.png)
 
 ## General Information
 - Visualize Merge Sort, Quick Sort, and Bubble/Insertion/Selection Sort algorithms.
